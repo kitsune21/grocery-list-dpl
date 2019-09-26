@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import List from './Componenents/List'
+import ItemForm from './Componenents/Form';
 
 class App extends Component {
 
@@ -27,12 +28,26 @@ class App extends Component {
     })
   }
 
+  getUniqId = () => {
+    //NOTE We are just using this as a helper function for id's since we aren't using a db yet
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+   }
+
+  addItem = (item) => {
+    const { myList } = this.state;
+    const myItem = {id: this.getUniqId(), name: myItem, complete: false}
+    this.setState({myList: [...myList, myItem] })
+  }
+
   render() {
     const { myList } = this.state
     return(
       <div>
         <List myList={ myList } pickUp={ () => this.handleChecked}/>
         <p></p>
+        <ItemForm addMyList={this.addItem} />
       </div>
     )
   }
